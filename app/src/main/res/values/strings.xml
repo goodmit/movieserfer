@@ -5,4 +5,7 @@
     <string name="title_incoming">Incoming</string>
     <string name="poster">Movie Poster</string>
     <string name="movie_title">Movie Title</string>
+    <string name="movie_rating">Rating</string>
+    <string name="movie_popularity">Popularity</string>
+    <string name="movie_release_date">Release Date</string>
 </resources>
