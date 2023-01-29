@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.goodmit.movieserfer.databinding.FragmentTopBinding
+import com.goodmit.movieserfer.presentation.MoviesAdapter
+import io.reactivex.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TopFragment : Fragment() {
 
+    private val _mDisposable = CompositeDisposable()
+
     private var _binding: FragmentTopBinding? = null
+    private val _topVm by viewModel<TopViewModel>()
+    private lateinit var _moviesAdapter: MoviesAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,20 +28,28 @@ class TopFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val topViewModel =
-            ViewModelProvider(this).get(TopViewModel::class.java)
+        super.onCreate(savedInstanceState)
+
+        _binding = FragmentTopBinding.inflate(inflater, container, false)
 
         _binding = FragmentTopBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textTop
-        topViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        _moviesAdapter = MoviesAdapter()
+
+        binding.rvTopMovies.layoutManager = GridLayoutManager(root.context, 2)
+        binding.rvTopMovies.adapter = _moviesAdapter
+
+        _mDisposable.add(_topVm.getTopMovies().subscribe{
+            _moviesAdapter.submitData(lifecycle, it)
+        })
+
         return root
     }
 
     override fun onDestroyView() {
+        _mDisposable.dispose()
+
         super.onDestroyView()
         _binding = null
     }

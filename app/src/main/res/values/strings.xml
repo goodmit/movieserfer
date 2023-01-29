@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MovieSerfer</string>
     <string name="title_popular">Popular</string>
     <string name="title_top">Top</string>
-    <string name="title_incoming">Incoming</string>
+    <string name="title_upcoming">Upcoming</string>
     <string name="poster">Movie Poster</string>
     <string name="movie_title">Movie Title</string>
     <string name="movie_rating">Rating</string>

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_incoming"
-        android:name="com.goodmit.movieserfer.presentation.ui.incoming.IncomingFragment"
-        android:label="@string/title_incoming"
-        tools:layout="@layout/fragment_incoming" />
+        android:name="com.goodmit.movieserfer.presentation.ui.incoming.UpcomingFragment"
+        android:label="@string/title_upcoming"
+        tools:layout="@layout/fragment_upcoming" />
 </navigation>

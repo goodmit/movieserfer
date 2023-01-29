@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.LocaleList
 import java.util.*
 
-
 fun getCurrentLocale() : Locale =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         LocaleList.getDefault().get(0)
@@ -14,7 +13,7 @@ fun getCurrentLocale() : Locale =
 
 fun getMovieCategoryId(category: MovieCategory) =
     when (category) {
-        MovieCategory.Popular -> "popular"
-        MovieCategory.Incoming -> "incoming"
-        MovieCategory.Top -> "top_rated"
+        MovieCategory.Popular -> POPULAR_MOVIES
+        MovieCategory.Upcoming -> UPCOMING_MOVIES
+        MovieCategory.Top -> TOP_MOVIES
     }

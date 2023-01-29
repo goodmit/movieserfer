@@ -5,9 +5,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.goodmit.movieserfer.data.models.Movies
 
-class MoviesAdapter : PagingDataAdapter<Movies.Movie, MovieGridViewHolder>(
-    COMPARATOR
-) {
+class MoviesAdapter : PagingDataAdapter<Movies.Movie, MovieGridViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGridViewHolder {
         return MovieGridViewHolder.create(

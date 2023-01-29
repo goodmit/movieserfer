@@ -1,5 +1,6 @@
 package com.goodmit.movieserfer.data.storage
 
+import android.util.Log
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.goodmit.movieserfer.common.getCurrentLocale
@@ -14,11 +15,12 @@ class MoviesPagingSource(
     private val mapper: MoviesMapper,
 ) : RxPagingSource<Int, Movies.Movie>() {
 
+    var category = "popular"
+
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Movies.Movie>> {
         val position = params.key ?: 1
-
         return service.getMovies(
-            category = "popular",
+            category = category,
             page = position,
             language = getCurrentLocale().language)
             .subscribeOn(Schedulers.io())

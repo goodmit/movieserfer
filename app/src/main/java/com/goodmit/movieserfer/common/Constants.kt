@@ -8,4 +8,8 @@ const val IMAGE_URL="https://image.tmdb.org/t/p/w185/"
 const val DEFAULT_BACKDROP_URL = "http://placehold.jp/36/cccccc/aaaaaa/480x270.png?text=Image"
 const val DEFAULT_POSTER_URL = "http://placehold.jp/48/cccccc/aaaaaa/320x480.png?text=Image"
 
-enum class MovieCategory { Popular, Top, Incoming }
+enum class MovieCategory { Popular, Top, Upcoming }
+
+const val POPULAR_MOVIES = "popular"
+const val TOP_MOVIES = "top_rated"
+const val UPCOMING_MOVIES = "upcoming"

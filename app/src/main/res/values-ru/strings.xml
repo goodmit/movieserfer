@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieSerfer</string>
+    <string name="title_popular">Популярное</string>
+    <string name="title_top">Топ</string>
+    <string name="title_upcoming">Предстоящие</string>
+    <string name="poster">Обложка</string>
+    <string name="movie_title">Название</string>
+    <string name="movie_rating">Рейтинг</string>
+    <string name="movie_popularity">Популярность</string>
+    <string name="movie_release_date">Дата выхода</string>
+</resources>

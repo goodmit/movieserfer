@@ -2,10 +2,13 @@ package com.goodmit.movieserfer.presentation
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.goodmit.movieserfer.R
@@ -16,13 +19,22 @@ private const val DATE_FORMAT = "dd MMM yyyy"
 
 class MovieGridViewHolder(private val binding: MovieViewholderBinding) : RecyclerView.ViewHolder(binding.root) {
 
+    lateinit var currentMovie : Movies.Movie;
     private val titleTextView: TextView = itemView.findViewById(R.id.movie_title)
     private val ratingTextView: TextView = itemView.findViewById(R.id.rating_title)
     private val popularityTextView: TextView = itemView.findViewById(R.id.popularity_title)
     private val dateTextView: TextView = itemView.findViewById(R.id.release_date_TextView)
     private val posterImageView: ImageView = itemView.findViewById(R.id.poster)
 
+    init {
+        itemView.setOnClickListener {
+            Log.d("MovieGridViewHolder", "movie ${currentMovie.movieId} was clicked")
+
+        }
+    }
+
     fun bind(movie: Movies.Movie) {
+        currentMovie = movie;
         titleTextView.text = movie.title
         ("${getResourceString(itemView.context, R.string.movie_rating)}: ${movie.voteAverage}")
             .also { ratingTextView.text = it }

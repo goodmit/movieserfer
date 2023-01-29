@@ -8,6 +8,6 @@ import com.goodmit.movieserfer.domain.models.MoviesDTO
 import io.reactivex.Flowable
 
 interface MovieRepository {
-    fun getMovies(): Flowable<PagingData<Movies.Movie>>
+    fun getMovies(category : MovieCategory): Flowable<PagingData<Movies.Movie>>
     //fun getMovieDetails(movieId: String): Flowable<MovieDetailsDTO>
 }

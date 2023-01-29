@@ -1,6 +1,7 @@
 package com.goodmit.movieserfer.data.storage
 
 import android.content.Context
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -23,6 +24,8 @@ class MoviesRemoteMediator(
 
     private val database = MovieDatabase.getInstance(context)
 
+    var category = "popular"
+
     override fun loadSingle(
         loadType: LoadType,
         state: PagingState<Int, Movies.Movie>
@@ -33,19 +36,16 @@ class MoviesRemoteMediator(
                 when (it) {
                     LoadType.REFRESH -> {
                         val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-
                         remoteKeys?.nextKey?.minus(1) ?: 1
                     }
                     LoadType.PREPEND -> {
                         val remoteKeys = getRemoteKeyForFirstItem(state)
                             ?: throw InvalidObjectException("Result is empty")
-
                         remoteKeys.prevKey ?: INVALID_PAGE
                     }
                     LoadType.APPEND -> {
                         val remoteKeys = getRemoteKeyForLastItem(state)
                             ?: throw InvalidObjectException("Result is empty")
-
                         remoteKeys.nextKey ?: INVALID_PAGE
                     }
                 }
@@ -55,7 +55,7 @@ class MoviesRemoteMediator(
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
                     service.getMovies(
-                        category = "popular",
+                        category = category,
                         page = page,
                         language = getCurrentLocale().language)
                         .map { mapper.responseToModel(it) }
@@ -66,7 +66,6 @@ class MoviesRemoteMediator(
 
             }
             .onErrorReturn { MediatorResult.Error(it) }
-
     }
 
     @Suppress("DEPRECATION")

@@ -1,4 +1,4 @@
-package com.goodmit.movieserfer.presentation.ui.top
+package com.goodmit.movieserfer.presentation.ui.incoming
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +11,12 @@ import com.goodmit.movieserfer.domain.api.MovieRepository
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-class TopViewModel(private val repository: MovieRepository) : ViewModel() {
+class UpcomingViewModel(private val repository: MovieRepository) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getTopMovies(): Flowable<PagingData<Movies.Movie>> {
+    fun getUpcomingMovies(): Flowable<PagingData<Movies.Movie>> {
         return repository
-            .getMovies(MovieCategory.Top)
+            .getMovies(MovieCategory.Upcoming)
             .map { pagingData -> pagingData.filter { it.poster != null } }
             .cachedIn(viewModelScope)
     }
