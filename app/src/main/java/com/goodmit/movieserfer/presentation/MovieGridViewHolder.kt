@@ -7,17 +7,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.goodmit.movieserfer.R
+import com.goodmit.movieserfer.common.RxBus
+import com.goodmit.movieserfer.common.RxEvent
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.databinding.MovieViewholderBinding
-
 private const val DATE_FORMAT = "dd MMM yyyy"
 
-class MovieGridViewHolder(private val binding: MovieViewholderBinding) : RecyclerView.ViewHolder(binding.root) {
+class MovieGridViewHolder(
+    private val binding: MovieViewholderBinding,
+    private val rxBus: RxBus) : RecyclerView.ViewHolder(binding.root) {
 
     lateinit var currentMovie : Movies.Movie;
     private val titleTextView: TextView = itemView.findViewById(R.id.movie_title)
@@ -29,7 +30,7 @@ class MovieGridViewHolder(private val binding: MovieViewholderBinding) : Recycle
     init {
         itemView.setOnClickListener {
             Log.d("MovieGridViewHolder", "movie ${currentMovie.movieId} was clicked")
-
+            rxBus.send(RxEvent.MovieIdRequested(currentMovie.movieId))
         }
     }
 
@@ -56,15 +57,13 @@ class MovieGridViewHolder(private val binding: MovieViewholderBinding) : Recycle
     }
 
     companion object {
-        fun create(parent: ViewGroup): MovieGridViewHolder {
+        fun create(parent: ViewGroup, rxBus: RxBus): MovieGridViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.movie_viewholder,  parent,false)
 
             val binding = MovieViewholderBinding.bind(view)
 
-            return MovieGridViewHolder(
-                binding
-            )
+            return MovieGridViewHolder(binding, rxBus)
         }
     }
 }

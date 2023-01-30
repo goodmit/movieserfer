@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.goodmit.movieserfer.common.RxBus
 import com.goodmit.movieserfer.databinding.FragmentTopBinding
 import com.goodmit.movieserfer.presentation.MoviesAdapter
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TopFragment : Fragment() {
 
+    private val _rxBus : RxBus by inject()
     private val _mDisposable = CompositeDisposable()
 
     private var _binding: FragmentTopBinding? = null
@@ -35,7 +38,7 @@ class TopFragment : Fragment() {
         _binding = FragmentTopBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        _moviesAdapter = MoviesAdapter()
+        _moviesAdapter = MoviesAdapter(_rxBus)
 
         binding.rvTopMovies.layoutManager = GridLayoutManager(root.context, 2)
         binding.rvTopMovies.adapter = _moviesAdapter

@@ -17,25 +17,9 @@ interface MovieService {
         @Query("language") language: String = "ru-RU"
     ): Single<MoviesDTO>
 
-/*
-    @GET("top_rated")
-    fun getTopRatedMovies(
-        @Query("api_key") apiKey: String,
-        @Query("page") page: Int,
-        @Query("language") language: String
-    ): Single<MoviesDTO>
-
-    @GET("upcoming")
-    fun getNowPlayingMovies(
-        @Query("api_key") apiKey: String,
-        @Query("page") page: Int,
-        @Query("language") language: String
-    ): Single<MoviesDTO>
-*/
-
     @GET("{movieId}")
     fun getMovieDetailsById(
-        @Path("movieId") movieId: Int
-        //@Query("api_key") apiKey: String = BuildConfig.API_KEY
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY
     ) : Single<MovieDetailsDTO>
 }
