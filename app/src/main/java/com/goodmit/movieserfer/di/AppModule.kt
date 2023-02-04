@@ -2,6 +2,7 @@ package com.goodmit.movieserfer.di
 
 import com.goodmit.movieserfer.common.RxBus
 import com.goodmit.movieserfer.presentation.MainViewModel
+import com.goodmit.movieserfer.presentation.MovieDetailsViewModel
 import com.goodmit.movieserfer.presentation.SplashViewModel
 import com.goodmit.movieserfer.presentation.ui.incoming.UpcomingViewModel
 import com.goodmit.movieserfer.presentation.ui.popular.PopularViewModel
@@ -13,6 +14,7 @@ val appModule = module {
     single { RxBus() }
 
     viewModel { SplashViewModel() }
+    viewModel { MovieDetailsViewModel(get()) }
     viewModel { MainViewModel() }
     viewModel { PopularViewModel(get()) }
     viewModel { TopViewModel(get()) }

@@ -9,9 +9,10 @@ import com.goodmit.movieserfer.R
 import com.goodmit.movieserfer.common.RxBus
 import com.goodmit.movieserfer.common.RxEvent
 import com.goodmit.movieserfer.databinding.ActivityMainBinding
-import com.goodmit.movieserfer.presentation.ui.MovieDetailsFragment
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
+
+//private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,13 +46,13 @@ class MainActivity : AppCompatActivity() {
         //navView.setupWithNavController(navController)
 
         _movieListener = _rxBus.listen(RxEvent.MovieIdRequested::class.java).subscribe {
-            val fragment = MovieDetailsFragment.newInstance(it.movieId)
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, fragment)
-                .addToBackStack(null)
-                .commit()
+            runMoveDetailsActivity(it.movieId)
         }
+    }
+
+    private fun runMoveDetailsActivity(movieId: Long) {
+        val intent = MovieDetailsActivity.newIntent(this@MainActivity, movieId)
+        startActivity(intent)
     }
 
     override fun onDestroy() {

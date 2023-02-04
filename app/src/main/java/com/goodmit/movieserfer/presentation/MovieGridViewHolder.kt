@@ -10,11 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.goodmit.movieserfer.R
+import com.goodmit.movieserfer.common.DATE_FORMAT
 import com.goodmit.movieserfer.common.RxBus
 import com.goodmit.movieserfer.common.RxEvent
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.databinding.MovieViewholderBinding
-private const val DATE_FORMAT = "dd MMM yyyy"
 
 class MovieGridViewHolder(
     private val binding: MovieViewholderBinding,

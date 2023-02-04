@@ -19,7 +19,7 @@ interface MovieService {
 
     @GET("{movieId}")
     fun getMovieDetailsById(
-        @Path("movieId") movieId: Int,
+        @Path("movieId") movieId: Long,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY
     ) : Single<MovieDetailsDTO>
 }

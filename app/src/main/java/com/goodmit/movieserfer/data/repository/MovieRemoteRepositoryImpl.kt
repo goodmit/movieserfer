@@ -12,11 +12,15 @@ import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.data.storage.MovieDatabase
 import com.goodmit.movieserfer.data.storage.MoviesRemoteMediator
 import com.goodmit.movieserfer.domain.api.MovieRepository
+import com.goodmit.movieserfer.domain.api.MovieService
+import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 class MovieRemoteRepositoryImpl(
     private val context: Context,
-    private val remoteMediator: MoviesRemoteMediator
+    private val remoteMediator: MoviesRemoteMediator,
+    private val movieService: MovieService
 ): MovieRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -31,5 +35,9 @@ class MovieRemoteRepositoryImpl(
             remoteMediator = remoteMediator.apply { this.category = getMovieCategoryId(category) },
             pagingSourceFactory = { MovieDatabase.getInstance(context).moviesDao().selectAll() }
         ).flowable
+    }
+
+    override fun getMovieDetails(movieId: Long): Single<MovieDetailsDTO> {
+        return movieService.getMovieDetailsById(movieId)
     }
 }

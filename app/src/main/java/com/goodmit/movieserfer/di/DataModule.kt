@@ -11,5 +11,5 @@ import org.koin.dsl.module
 val dataModule = module {
     single { MoviesMapper() }
     single { MoviesRemoteMediator(get(), get(), get()) }
-    single<MovieRepository> { MovieRemoteRepositoryImpl(get(), get()) }
+    single<MovieRepository> { MovieRemoteRepositoryImpl(get(), get(), get()) }
 }

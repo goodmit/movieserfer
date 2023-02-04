@@ -9,7 +9,9 @@ import com.goodmit.movieserfer.common.getMovieCategoryId
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.data.storage.MoviesPagingSource
 import com.goodmit.movieserfer.domain.api.MovieRepository
+import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 class MovieLocalRepositoryImpl(private val pagingSource: MoviesPagingSource) : MovieRepository {
 
@@ -24,5 +26,10 @@ class MovieLocalRepositoryImpl(private val pagingSource: MoviesPagingSource) : M
             pagingSourceFactory = { pagingSource
                 .apply { this.category = getMovieCategoryId(category) } }
         ).flowable
+    }
+
+    override fun getMovieDetails(movieId: Long): Single<MovieDetailsDTO> {
+
+        TODO("Not yet implemented")
     }
 }
