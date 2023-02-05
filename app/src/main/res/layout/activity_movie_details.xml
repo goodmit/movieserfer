@@ -31,7 +31,25 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/movie_title"
+                android:textAlignment="center"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/movie_overview" />
+
+            <TextView
+                android:id="@+id/movie_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/movie_genre" />
 
             <TextView
                 android:id="@+id/rating_title"
@@ -42,12 +60,12 @@
                 android:text="@string/movie_rating" />
 
             <TextView
-                android:id="@+id/popularity_title"
+                android:id="@+id/revenue_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/movie_popularity" />
+                android:text="@string/movie_revenue" />
 
             <TextView
                 android:id="@+id/release_date_TextView"
@@ -56,6 +74,22 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/movie_release_date" />
+
+            <TextView
+                android:id="@+id/movie_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/movie_status" />
+
+            <TextView
+                android:id="@+id/movie_tagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/movie_tagline" />
 
         </LinearLayout>
     </ScrollView>

@@ -49,4 +49,14 @@ data class MovieDetailsDTO(
         @SerializedName("name")
         val name: String
     )
+
+    fun moveGenres() : String = with(StringBuilder()) {
+        for(genre in genres) {
+            append(genre.name)
+            append(", ")
+        }
+        trim()
+        deleteCharAt(length - 1)
+        toString()
+    }
 }

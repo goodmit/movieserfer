@@ -9,4 +9,9 @@
     <string name="movie_rating">Rating</string>
     <string name="movie_popularity">Popularity</string>
     <string name="movie_release_date">Release Date</string>
+    <string name="movie_revenue">Revenue</string>
+    <string name="movie_overview">Overview</string>
+    <string name="movie_genre">Genre</string>
+    <string name="movie_status">Status</string>
+    <string name="movie_tagline">Tagline</string>
 </resources>

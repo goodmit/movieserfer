@@ -9,4 +9,9 @@
     <string name="movie_rating">Рейтинг</string>
     <string name="movie_popularity">Популярность</string>
     <string name="movie_release_date">Дата выхода</string>
+    <string name="movie_revenue">Доход</string>
+    <string name="movie_overview">Описание</string>
+    <string name="movie_genre">Жанр</string>
+    <string name="movie_status">Статус</string>
+    <string name="movie_tagline">Тэги</string>
 </resources>
