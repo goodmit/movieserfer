@@ -1,13 +1,13 @@
 package com.goodmit.movieserfer.data.storage
 
 import android.content.Context
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.goodmit.movieserfer.common.getCurrentLocale
 import com.goodmit.movieserfer.data.mapper.MoviesMapper
+import com.goodmit.movieserfer.data.models.MovieDetails
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.domain.api.MovieService
 import io.reactivex.Single
@@ -25,6 +25,18 @@ class MoviesRemoteMediator(
     private val database = MovieDatabase.getInstance(context)
 
     var category = "popular"
+
+    fun getMovieDetails(movieId: Long): Single<MovieDetails> {
+
+        return try {
+            Single.just(database.movieDetailsDao().movieDetailsById(movieId))
+        }
+        catch (ex: Exception) {
+            service.getMovieDetailsById(movieId)
+                .map { mapper.responseToMovieDetails(it) }
+                .map { addDetailsToDb(it) }
+        }
+    }
 
     override fun loadSingle(
         loadType: LoadType,
@@ -69,6 +81,20 @@ class MoviesRemoteMediator(
     }
 
     @Suppress("DEPRECATION")
+    private fun addDetailsToDb(details: MovieDetails) : MovieDetails {
+        database.beginTransaction()
+        try {
+            database.movieDetailsDao().insertMovieDetails(details)
+            database.setTransactionSuccessful()
+        }
+        finally {
+            database.endTransaction()
+        }
+
+        return details
+    }
+
+    @Suppress("DEPRECATION")
     private fun insertToDb(page: Int, loadType: LoadType, data: Movies): Movies {
         database.beginTransaction()
 
@@ -94,19 +120,22 @@ class MoviesRemoteMediator(
         return data
     }
 
-    private fun getRemoteKeyForLastItem(state: PagingState<Int, Movies.Movie>): Movies.MovieRemoteKeys? {
+    private fun getRemoteKeyForLastItem(state: PagingState<Int, Movies.Movie>)
+    : Movies.MovieRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
             database.movieRemoteKeysDao().remoteKeysByMovieId(repo.movieId)
         }
     }
 
-    private fun getRemoteKeyForFirstItem(state: PagingState<Int, Movies.Movie>): Movies.MovieRemoteKeys? {
+    private fun getRemoteKeyForFirstItem(state: PagingState<Int, Movies.Movie>)
+    : Movies.MovieRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { movie ->
             database.movieRemoteKeysDao().remoteKeysByMovieId(movie.movieId)
         }
     }
 
-    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Movies.Movie>): Movies.MovieRemoteKeys? {
+    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Movies.Movie>)
+    : Movies.MovieRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.movieId?.let { id ->
                 database.movieRemoteKeysDao().remoteKeysByMovieId(id)

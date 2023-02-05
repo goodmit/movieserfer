@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.goodmit.movieserfer.R
 import com.goodmit.movieserfer.common.DATE_FORMAT
 import com.goodmit.movieserfer.data.models.ImageEntity
+import com.goodmit.movieserfer.data.models.MovieDetails
 import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -57,8 +58,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         _movieDetailsVm.getMovieDetails(_movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableSingleObserver<MovieDetailsDTO>() {
-                override fun onSuccess(movieDetails: MovieDetailsDTO) {
+            .subscribe(object : DisposableSingleObserver<MovieDetails>() {
+                override fun onSuccess(movieDetails: MovieDetails) {
                     Log.d("MovieDetailsActivity", "got movie: ${movieDetails.title}")
                     updateUI(movieDetails)
                 }
@@ -69,7 +70,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             })
     }
 
-    private fun updateUI(movieDetails: MovieDetailsDTO) {
+    private fun updateUI(movieDetails: MovieDetails) {
 
         val uri = ImageEntity(movieDetails.posterPath).original
         Glide.with(posterImageView)
@@ -80,7 +81,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         ("${getString(R.string.movie_overview)}: ${movieDetails.overview}")
             .also { descriptionTextView.text = it }
-        ("${getString(R.string.movie_genre)}: ${movieDetails.moveGenres()}")
+        ("${getString(R.string.movie_genre)}: ${movieDetails.genres}")
             .also { genreTextView.text = it }
         ("${getString(R.string.movie_rating)}: ${movieDetails.voteAverage}")
             .also { ratingTextView.text = it }

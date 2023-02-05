@@ -36,7 +36,8 @@ data class Movies(
     @Parcelize
     @Entity(tableName = "movie_remote_keys")
     data class MovieRemoteKeys(
-        @PrimaryKey val movieId: Long,
+        @PrimaryKey
+        val movieId: Long,
         val prevKey: Int?,
         val nextKey: Int?
     ) : Parcelable

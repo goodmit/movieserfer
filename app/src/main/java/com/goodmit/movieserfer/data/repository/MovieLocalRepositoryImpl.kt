@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.goodmit.movieserfer.common.MovieCategory
 import com.goodmit.movieserfer.common.getMovieCategoryId
+import com.goodmit.movieserfer.data.models.MovieDetails
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.data.storage.MoviesPagingSource
 import com.goodmit.movieserfer.domain.api.MovieRepository
@@ -28,7 +29,7 @@ class MovieLocalRepositoryImpl(private val pagingSource: MoviesPagingSource) : M
         ).flowable
     }
 
-    override fun getMovieDetails(movieId: Long): Single<MovieDetailsDTO> {
+    override fun getMovieDetails(movieId: Long): Single<MovieDetails> {
 
         TODO("Not yet implemented")
     }

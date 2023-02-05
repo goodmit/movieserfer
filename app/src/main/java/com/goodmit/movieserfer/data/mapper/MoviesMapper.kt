@@ -1,12 +1,15 @@
 package com.goodmit.movieserfer.data.mapper
 
-import android.content.Context
 import com.goodmit.movieserfer.common.getCurrentLocale
 import com.goodmit.movieserfer.data.models.ImageEntity
+import com.goodmit.movieserfer.data.models.MovieDetails
 import com.goodmit.movieserfer.data.models.Movies
+import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import com.goodmit.movieserfer.domain.models.MoviesDTO
 import java.text.SimpleDateFormat
 import java.util.*
+
+private const val TMDB_DATE_FORMAT = "yyyy-mm-dd"
 
 @Suppress("UNNECESSARY_SAFE_CALL")
 class MoviesMapper() {
@@ -27,9 +30,9 @@ class MoviesMapper() {
                         it.title,
                         it.voteAverage,
                         it.voteCount,
-                        it.releaseDate?.let { date ->
+                        it.releaseDate.let { date ->
                             if (date.isNotEmpty()) {
-                                SimpleDateFormat("yyyy-mm-dd", getCurrentLocale()).parse(date)
+                                SimpleDateFormat(TMDB_DATE_FORMAT, getCurrentLocale()).parse(date)
                             } else {
                                 null
                             }
@@ -58,4 +61,21 @@ class MoviesMapper() {
         }
     }
 
+    fun responseToMovieDetails(remoteDetails: MovieDetailsDTO): MovieDetails {
+        return with(remoteDetails) {
+            MovieDetails(
+                id = id,
+                title = title,
+                posterPath = posterPath,
+                budget = budget,
+                genres = moveGenres(),
+                overview = overview,
+                releaseDate = releaseDate,
+                revenue = revenue,
+                status = status,
+                tagline = tagline,
+                voteAverage = voteAverage
+            )
+        }
+    }
 }

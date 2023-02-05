@@ -19,6 +19,18 @@ interface MovieDao {
 }
 
 @Dao
+interface MovieDetailsDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovieDetails(movieDetails: MovieDetails)
+
+    @Query("SELECT * FROM movie_details WHERE id = :movieId")
+    fun movieDetailsById(movieId: Long): MovieDetails
+
+    @Query("DELETE FROM movie_details")
+    fun clearMovieDetails()
+}
+
+@Dao
 interface MovieRemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(remoteKey: List<Movies.MovieRemoteKeys>)

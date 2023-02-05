@@ -1,7 +1,5 @@
 package com.goodmit.movieserfer.domain.models
 
-
-import com.goodmit.movieserfer.data.models.ImageEntity
 import com.google.gson.annotations.SerializedName
 import java.util.*
 

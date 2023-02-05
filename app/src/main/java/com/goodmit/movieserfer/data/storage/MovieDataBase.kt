@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.goodmit.movieserfer.data.mapper.Converters
-import com.goodmit.movieserfer.data.models.MovieDao
-import com.goodmit.movieserfer.data.models.MovieRemoteKeysDao
-import com.goodmit.movieserfer.data.models.Movies
+import com.goodmit.movieserfer.data.models.*
 
 @Database(
-    entities = [Movies.Movie::class, Movies.MovieRemoteKeys::class],
+    entities = [Movies.Movie::class,
+               Movies.MovieRemoteKeys::class,
+               MovieDetails::class],
     version = 1,
     exportSchema = false
 )
@@ -19,6 +19,7 @@ import com.goodmit.movieserfer.data.models.Movies
 abstract class MovieDatabase: RoomDatabase() {
     abstract fun moviesDao(): MovieDao
     abstract fun movieRemoteKeysDao(): MovieRemoteKeysDao
+    abstract fun movieDetailsDao(): MovieDetailsDao
 
     companion object {
         @Volatile
@@ -38,6 +39,7 @@ abstract class MovieDatabase: RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
                 MovieDatabase::class.java, "TMDB.db")
+                .allowMainThreadQueries()
                 .build()
     }
 }

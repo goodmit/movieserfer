@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.goodmit.movieserfer.common.MovieCategory
 import com.goodmit.movieserfer.common.getMovieCategoryId
+import com.goodmit.movieserfer.data.models.MovieDetails
 import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.data.storage.MovieDatabase
 import com.goodmit.movieserfer.data.storage.MoviesRemoteMediator
@@ -37,7 +38,7 @@ class MovieRemoteRepositoryImpl(
         ).flowable
     }
 
-    override fun getMovieDetails(movieId: Long): Single<MovieDetailsDTO> {
-        return movieService.getMovieDetailsById(movieId)
+    override fun getMovieDetails(movieId: Long): Single<MovieDetails> {
+        return remoteMediator.getMovieDetails(movieId)
     }
 }
