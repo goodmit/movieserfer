@@ -1,4 +1,4 @@
-package com.goodmit.movieserfer.presentation.ui.incoming
+package com.goodmit.movieserfer.presentation.ui.upcoming
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,6 +44,8 @@ class UpcomingFragment : Fragment() {
         _mDisposable.add(_upcomingVm.getUpcomingMovies().subscribe{
             _moviesAdapter.submitData(lifecycle, it)
         })
+
+        throw RuntimeException("Test Crash")
 
         return root
     }

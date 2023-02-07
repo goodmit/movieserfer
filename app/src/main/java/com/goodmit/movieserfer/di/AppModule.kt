@@ -4,7 +4,7 @@ import com.goodmit.movieserfer.common.RxBus
 import com.goodmit.movieserfer.presentation.MainViewModel
 import com.goodmit.movieserfer.presentation.MovieDetailsViewModel
 import com.goodmit.movieserfer.presentation.SplashViewModel
-import com.goodmit.movieserfer.presentation.ui.incoming.UpcomingViewModel
+import com.goodmit.movieserfer.presentation.ui.upcoming.UpcomingViewModel
 import com.goodmit.movieserfer.presentation.ui.popular.PopularViewModel
 import com.goodmit.movieserfer.presentation.ui.top.TopViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

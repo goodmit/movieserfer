@@ -1,4 +1,4 @@
-package com.goodmit.movieserfer.presentation.ui.incoming
+package com.goodmit.movieserfer.presentation.ui.upcoming
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

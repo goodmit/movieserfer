@@ -7,11 +7,9 @@ import com.goodmit.movieserfer.data.models.Movies
 import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import com.goodmit.movieserfer.domain.models.MoviesDTO
 import java.text.SimpleDateFormat
-import java.util.*
 
 private const val TMDB_DATE_FORMAT = "yyyy-mm-dd"
 
-@Suppress("UNNECESSARY_SAFE_CALL")
 class MoviesMapper() {
 
     fun responseToModel(remoteModel: MoviesDTO): Movies {
@@ -37,26 +35,6 @@ class MoviesMapper() {
                                 null
                             }
                         })
-                })
-        }
-    }
-
-    fun modelToResponse(remoteModel: Movies): MoviesDTO {
-        return with(remoteModel) {
-            MoviesDTO(
-                page = page,
-                totalPages = totalPages,
-                totalMovies = totalMovies,
-                movies = movies.map {
-                    MoviesDTO.MovieDataDTO(
-                        it.movieId,
-                        it.popularity,
-                        it.poster?.url ?: "",
-                        it.backdrop?.url ?: "",
-                        it.title,
-                        it.voteAverage,
-                        it.voteCount,
-                        it.releaseDate?.time.toString())
                 })
         }
     }
