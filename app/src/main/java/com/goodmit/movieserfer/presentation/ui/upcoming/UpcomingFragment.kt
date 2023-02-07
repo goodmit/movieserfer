@@ -45,8 +45,6 @@ class UpcomingFragment : Fragment() {
             _moviesAdapter.submitData(lifecycle, it)
         })
 
-        throw RuntimeException("Test Crash")
-
         return root
     }
 
