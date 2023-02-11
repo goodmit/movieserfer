@@ -3,6 +3,8 @@ package com.goodmit.movieserfer.di
 import com.goodmit.movieserfer.BuildConfig
 import com.goodmit.movieserfer.common.BASE_URL
 import com.goodmit.movieserfer.domain.api.MovieService
+import com.goodmit.movieserfer.domain.usecases.GetMovieDetailsUseCase
+import com.goodmit.movieserfer.domain.usecases.GetMoviesUseCase
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,6 +19,8 @@ val domainModule = module {
     single { createOkHttpClient(get(), get()) }
     single { createRetrofit(get()) }
     single { createMovieService(get()) }
+    single { GetMoviesUseCase(get()) }
+    single { GetMovieDetailsUseCase(get()) }
 }
 
 private fun createLoggingInterceptor(): HttpLoggingInterceptor =
