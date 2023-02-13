@@ -2,20 +2,25 @@ package com.goodmit.movieserfer.presentation
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.goodmit.movieserfer.R
 import com.goodmit.movieserfer.common.DATE_FORMAT
 import com.goodmit.movieserfer.data.models.ImageEntity
 import com.goodmit.movieserfer.data.models.MovieDetails
-import com.goodmit.movieserfer.domain.models.MovieDetailsDTO
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,7 +32,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private var _movieId : Long = -1
     private val _movieDetailsVm by viewModel<MovieDetailsViewModel>()
-    private val _mDisposable = CompositeDisposable()
 
     private lateinit var titleTextView: TextView
     private lateinit var descriptionTextView: TextView
@@ -38,6 +42,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var statusTextView: TextView
     private lateinit var taglineTextView: TextView
     private lateinit var posterImageView: ImageView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         statusTextView = findViewById(R.id.movie_status)
         taglineTextView = findViewById(R.id.movie_tagline)
         posterImageView = findViewById(R.id.poster)
+        progressBar = findViewById(R.id.progress)
 
         _movieDetailsVm.getMovieDetails(_movieId)
             .subscribeOn(Schedulers.io())
@@ -71,11 +77,6 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateUI(movieDetails: MovieDetails) {
-
-        val uri = ImageEntity(movieDetails.posterPath).original
-        Glide.with(posterImageView)
-            .load(uri)
-            .into(posterImageView)
 
         titleTextView.text = movieDetails.title
 
@@ -95,6 +96,29 @@ class MovieDetailsActivity : AppCompatActivity() {
             .also { statusTextView.text = it }
         ("${getString(R.string.movie_tagline)}: ${movieDetails.tagline}")
             .also { taglineTextView.text = it }
+
+        val uri = ImageEntity(movieDetails.posterPath).original
+        Glide.with(posterImageView)
+            .load(uri)
+            .listener(object : RequestListener<Drawable> {
+                override fun onResourceReady(resource: Drawable?, model: Any?,
+                    target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+                ): Boolean {
+                    return updateProgressBar(false)
+                }
+
+                override fun onLoadFailed(e: GlideException?, model: Any?,
+                    target: Target<Drawable>?, isFirstResource: Boolean
+                ): Boolean {
+                    return updateProgressBar(false)
+                }
+            })
+            .into(posterImageView)
+    }
+
+    private fun updateProgressBar(isActive: Boolean) : Boolean {
+        progressBar.visibility = if (isActive) View.VISIBLE else View.GONE
+        return isActive
     }
 
     companion object {
