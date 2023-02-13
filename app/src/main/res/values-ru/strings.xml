@@ -5,6 +5,7 @@
     <string name="title_top">Топ</string>
     <string name="title_upcoming">Предстоящие</string>
     <string name="poster">Обложка</string>
+    <string name="movie">Фильм</string>
     <string name="movie_title">Название</string>
     <string name="movie_rating">Рейтинг</string>
     <string name="movie_popularity">Популярность</string>
