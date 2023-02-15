@@ -20,7 +20,8 @@ class MovieGridViewHolder(
     private val binding: MovieViewholderBinding,
     private val rxBus: RxBus) : RecyclerView.ViewHolder(binding.root) {
 
-    lateinit var currentMovie : Movies.Movie;
+    lateinit var currentMovie : Movies.Movie
+
     private val titleTextView: TextView = itemView.findViewById(R.id.movie_title)
     private val ratingTextView: TextView = itemView.findViewById(R.id.rating_title)
     private val popularityTextView: TextView = itemView.findViewById(R.id.popularity_title)
@@ -28,6 +29,16 @@ class MovieGridViewHolder(
     private val posterImageView: ImageView = itemView.findViewById(R.id.poster)
 
     init {
+
+        val params = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        posterImageView.layoutParams = params
+        posterImageView.scaleType = ImageView.ScaleType.FIT_CENTER
+        posterImageView.adjustViewBounds = true
+
         itemView.setOnClickListener {
             Log.d("MovieGridViewHolder", "movie ${currentMovie.movieId} was clicked")
             rxBus.send(RxEvent.MovieIdRequested(currentMovie.movieId))
@@ -45,6 +56,9 @@ class MovieGridViewHolder(
         ("${getResourceString(itemView.context, R.string.movie_release_date)}:" +
                 " ${DateFormat.format(DATE_FORMAT, movie.releaseDate)}")
             .also { dateTextView.text = it }
+
+
+
         with(movie) {
             Glide.with(binding.poster)
                 .load(poster?.medium)

@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -60,6 +63,15 @@ class MovieDetailsActivity : AppCompatActivity() {
         taglineTextView = findViewById(R.id.movie_tagline)
         posterImageView = findViewById(R.id.poster)
         progressBar = findViewById(R.id.progress)
+
+        val params = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        posterImageView.layoutParams = params
+        posterImageView.scaleType = ImageView.ScaleType.FIT_CENTER
+        posterImageView.adjustViewBounds = true
 
         _movieDetailsVm.getMovieDetails(_movieId)
             .subscribeOn(Schedulers.io())
