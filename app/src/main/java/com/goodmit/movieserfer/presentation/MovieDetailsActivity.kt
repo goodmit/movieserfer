@@ -13,7 +13,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -109,7 +108,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         ("${getString(R.string.movie_tagline)}: ${movieDetails.tagline}")
             .also { taglineTextView.text = it }
 
-        val uri = ImageEntity(movieDetails.posterPath).original
+        val uri = ImageEntity(movieDetails.posterPath).large
         Glide.with(posterImageView)
             .load(uri)
             .listener(object : RequestListener<Drawable> {

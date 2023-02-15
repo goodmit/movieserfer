@@ -66,10 +66,13 @@ class MoviesRemoteMediator(
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
+
+                    val langParams = "${getCurrentLocale().language}-${getCurrentLocale().language.uppercase()}"
+                    
                     service.getMovies(
                         category = category,
                         page = page,
-                        language = getCurrentLocale().language)
+                        language = langParams)
                         .map { mapper.responseToModel(it) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }
